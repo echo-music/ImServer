@@ -14,6 +14,7 @@ import (
 	"io/ioutil"
 	"mime/multipart"
 	"net/http"
+	"net/url"
 	"os"
 	"sync"
 	"time"
@@ -449,10 +450,13 @@ func uploadFile(uploadURL, fileName string, copyFileWriter func(io.Writer) error
 	return resultMap, err
 }
 
-func (s *Service) downloadImage(url string, ctx context.Context) (io.ReadCloser, error) {
-
-	s.Debug("开始下载图片！", zap.String("url", url))
-	req, err := http.NewRequestWithContext(ctx, http.MethodGet, url, nil)
+func (s *Service) downloadImage(imgUrl string, ctx context.Context) (io.ReadCloser, error) {
+	s.Debug("开始下载图片！", zap.String("url", imgUrl))
+	// 需要转换内部地址
+	downloadUrl, _ := url.Parse(imgUrl)
+	imgUrl = "http://" + downloadUrl.Host + ":8090" + downloadUrl.RequestURI()
+	s.Debug("转换的成为内网下载地址！", zap.String("url", imgUrl))
+	req, err := http.NewRequestWithContext(ctx, http.MethodGet, imgUrl, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -461,15 +465,15 @@ func (s *Service) downloadImage(url string, ctx context.Context) (io.ReadCloser,
 	resp, err := client.Do(req)
 	// resp, err := s.downloadClient.Do(req)
 	if err != nil {
-		s.Error("下载图片错误！", zap.String("url", url), zap.Error(err))
+		s.Error("下载图片错误！", zap.String("url", imgUrl), zap.Error(err))
 		return nil, err
 	}
 	if resp == nil {
-		s.Error("没有返回数据，下载图片失败！", zap.String("url", url))
+		s.Error("没有返回数据，下载图片失败！", zap.String("url", imgUrl))
 		return nil, errors.New("没有返回数据，下载图片失败！")
 	}
 	if resp.StatusCode != http.StatusOK {
-		s.Error("下载图片返回状态有误！", zap.Int("status", resp.StatusCode), zap.String("url", url))
+		s.Error("下载图片返回状态有误！", zap.Int("status", resp.StatusCode), zap.String("url", imgUrl))
 		return nil, errors.New("下载图片返回状态有误！")
 	}
 	return resp.Body, nil
