@@ -53,9 +53,10 @@ func (sm *ServiceMinio) UploadFile(filePath string, contentType string, copyFile
 	secretAccessKey := minioConfig.SecretAccessKey
 	useSSL := false
 
-	if strings.HasPrefix(uploadUl.Scheme, "https") {
-		useSSL = true
-	}
+	endpoint = "10.30.0.23:9000"
+	// if strings.HasPrefix(uploadUl.Scheme, "https") {
+	// 	useSSL = true
+	// }
 	// 初使化minio client对象。
 	minioClient, err := minio.New(endpoint, &minio.Options{
 		Creds:  credentials.NewStaticV4(accessKeyID, secretAccessKey, ""),
@@ -71,7 +72,7 @@ func (sm *ServiceMinio) UploadFile(filePath string, contentType string, copyFile
 		bucketName = strs[0]
 	}
 	exists, err := minioClient.BucketExists(ctx, bucketName)
-	sm.Debug(fmt.Sprintf("地址 %s 创建 %d目录失败 %s", endpoint, bucketName, err))
+	sm.Debug(fmt.Sprintf("地址 %s 创建 %s 目录失败 %s", endpoint, bucketName, err))
 	if err != nil {
 		sm.Error(fmt.Sprintf("检测 %s 目录是否存在错误", bucketName))
 		return nil, err
