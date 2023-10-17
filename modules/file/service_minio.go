@@ -71,8 +71,9 @@ func (sm *ServiceMinio) UploadFile(filePath string, contentType string, copyFile
 		bucketName = strs[0]
 	}
 	exists, err := minioClient.BucketExists(ctx, bucketName)
+	sm.Debug(fmt.Sprintf("地址 %s 创建 %d目录失败 %s", endpoint, bucketName, err))
 	if err != nil {
-		sm.Error(fmt.Sprintf("检测 %s目录是否存在错误", bucketName))
+		sm.Error(fmt.Sprintf("检测 %s 目录是否存在错误", bucketName))
 		return nil, err
 	}
 	if !exists {

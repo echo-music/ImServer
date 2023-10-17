@@ -136,7 +136,7 @@ func (f *File) uploadFile(c *wkhttp.Context) {
 	defer file.Close()
 	if err != nil {
 		f.Error("上传文件失败！", zap.Error(err))
-		c.ResponseError(errors.New("上传文件失败！"))
+		c.ResponseError(errors.New("上传文件失败！" + err.Error()))
 		return
 	}
 
