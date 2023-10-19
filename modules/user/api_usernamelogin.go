@@ -36,8 +36,8 @@ func (u *User) usernameRegister(c *wkhttp.Context) {
 		c.Response(errors.New("密码不能为空！"))
 		return
 	}
-	if len(req.Username) < 8 || len(req.Username) > 22 {
-		c.ResponseError(errors.New("用户名必须在8-22位"))
+	if len(req.Username) < 4 || len(req.Username) > 22 {
+		c.ResponseError(errors.New("用户名必须在4-22位"))
 		return
 	}
 	userInfo, err := u.db.QueryByUsername(req.Username)
@@ -65,8 +65,8 @@ func (u *User) usernameLogin(c *wkhttp.Context) {
 		c.ResponseError(err)
 		return
 	}
-	if len(req.Username) < 8 || len(req.Username) > 22 {
-		c.ResponseError(errors.New("用户名必须在8-22位"))
+	if len(req.Username) < 4 || len(req.Username) > 22 {
+		c.ResponseError(errors.New("用户名必须在4-22位"))
 		return
 	}
 	loginSpan := u.ctx.Tracer().StartSpan(
