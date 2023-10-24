@@ -499,11 +499,7 @@ func (u *User) syncAccount(c *wkhttp.Context) {
 		c.ResponseError(errors.New("该用户不存在"))
 		return
 	}
-	oldPwd := util.MD5(util.MD5(req.Password))
-	if oldPwd != userInfo.Password {
-		c.ResponseError(errors.New("旧密码错误"))
-		return
-	}
+
 	// err = u.db.UpdateUsersWithField("password", util.MD5(util.MD5(req.NewPassword)), userInfo.UID)
 	tx, _ := u.db.session.Begin()
 	err = u.db.UpdateUsersWithField("password", util.MD5(util.MD5(req.Password)), userInfo.UID)
