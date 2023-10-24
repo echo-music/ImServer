@@ -468,6 +468,73 @@ func (u *User) updatePwd(c *wkhttp.Context) {
 	c.ResponseOK()
 }
 
+// 同步账号信息
+func (u *User) syncAccount(c *wkhttp.Context) {
+	loginUID := c.GetLoginUID()
+	type reqVO struct {
+		Username    string `json:"username"`
+		Password    string `json:"password"`
+		NewPassword string `json:"new_password"`
+	}
+	var req reqVO
+	if err := c.BindJSON(&req); err != nil {
+		c.ResponseError(errors.New("请求数据格式有误！"))
+		return
+	}
+	if len(req.Username) == 0 {
+		c.ResponseError(errors.New("用户名不能为空"))
+		return
+	}
+	if req.Password == "" || req.NewPassword == "" {
+		c.ResponseError(errors.New("密码不能为空"))
+		return
+	}
+	if req.Password == req.NewPassword {
+		c.ResponseError(errors.New("新密码不能和旧密码相同"))
+		return
+	}
+	userInfo, err := u.db.QueryByUID(loginUID)
+	if err != nil {
+		u.Error("查询用户资料错误", zap.Error(err))
+		c.ResponseError(errors.New("查询用户资料错误"))
+		return
+	}
+	if userInfo == nil {
+		c.ResponseError(errors.New("该用户不存在"))
+		return
+	}
+	oldPwd := util.MD5(util.MD5(req.Password))
+	if oldPwd != userInfo.Password {
+		c.ResponseError(errors.New("旧密码错误"))
+		return
+	}
+	// err = u.db.UpdateUsersWithField("password", util.MD5(util.MD5(req.NewPassword)), userInfo.UID)
+	tx, _ := u.db.session.Begin()
+	err = u.db.UpdateUsersWithField("password", util.MD5(util.MD5(req.NewPassword)), userInfo.UID)
+	if err != nil {
+		u.Error("修改登录密码错误", zap.Error(err))
+		c.ResponseError(errors.New("修改登录密码错误"))
+		tx.Rollback()
+		return
+	}
+	err = u.db.UpdateUsersWithField("username", req.Username, userInfo.UID)
+	if err != nil {
+		u.Error("修改登录账号错误", zap.Error(err))
+		c.ResponseError(errors.New("修改登录账号错误"))
+		tx.Rollback()
+		return
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		u.Error("数据库事物提交失败", zap.Error(err))
+		c.ResponseError(errors.New("数据库事物提交失败"))
+		tx.Rollback()
+		return
+	}
+	c.ResponseOK()
+}
+
 type usernameRegisterReq struct {
 	Name     string     `json:"name"`     // 昵称
 	Username string     `json:"username"` // 用户名

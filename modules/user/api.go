@@ -143,6 +143,7 @@ func (u *User) Route(r *wkhttp.WKHttp) {
 		user.DELETE("/destroy/:code", u.destroyAccount)            // 注销用户
 		user.POST("/sms/destroy", u.sendDestroyCode)               //获取注销账号短信验证码
 		user.PUT("/updatepassword", u.updatePwd)                   // 修改登录密码
+		user.PUT("/sync/account", u.syncAccount)                   // 同步账号
 		user.POST("/web3publickey", u.uploadWeb3PublicKey)         // 上传web3公钥
 		// #################### 登录设备管理 ####################
 		user.GET("/devices", u.deviceList)                 // 用户登录设备
