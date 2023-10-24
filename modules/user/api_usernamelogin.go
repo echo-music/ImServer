@@ -472,10 +472,8 @@ func (u *User) updatePwd(c *wkhttp.Context) {
 func (u *User) syncAccount(c *wkhttp.Context) {
 	loginUID := c.GetLoginUID()
 	type reqVO struct {
-		Username    string `json:"username"`
-		Password    string `json:"password"`
-		NewPassword string `json:"new_password"`
-		Force       bool   `json:"force"`
+		Username string `json:"username"`
+		Password string `json:"password"`
 	}
 	var req reqVO
 	if err := c.BindJSON(&req); err != nil {
@@ -486,14 +484,11 @@ func (u *User) syncAccount(c *wkhttp.Context) {
 		c.ResponseError(errors.New("用户名不能为空"))
 		return
 	}
-	if req.Password == "" || req.NewPassword == "" {
+	if len(req.Password) == 0 {
 		c.ResponseError(errors.New("密码不能为空"))
 		return
 	}
-	if req.Password == req.NewPassword {
-		c.ResponseError(errors.New("新密码不能和旧密码相同"))
-		return
-	}
+
 	userInfo, err := u.db.QueryByUID(loginUID)
 	if err != nil {
 		u.Error("查询用户资料错误", zap.Error(err))
@@ -511,7 +506,7 @@ func (u *User) syncAccount(c *wkhttp.Context) {
 	}
 	// err = u.db.UpdateUsersWithField("password", util.MD5(util.MD5(req.NewPassword)), userInfo.UID)
 	tx, _ := u.db.session.Begin()
-	err = u.db.UpdateUsersWithField("password", util.MD5(util.MD5(req.NewPassword)), userInfo.UID)
+	err = u.db.UpdateUsersWithField("password", util.MD5(util.MD5(req.Password)), userInfo.UID)
 	if err != nil {
 		u.Error("修改登录密码错误", zap.Error(err))
 		c.ResponseError(errors.New("修改登录密码错误"))
