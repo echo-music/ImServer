@@ -475,6 +475,7 @@ func (u *User) syncAccount(c *wkhttp.Context) {
 		Username    string `json:"username"`
 		Password    string `json:"password"`
 		NewPassword string `json:"new_password"`
+		Force       bool   `json:"force"`
 	}
 	var req reqVO
 	if err := c.BindJSON(&req); err != nil {
