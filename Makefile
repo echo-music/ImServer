@@ -15,4 +15,10 @@ env-test:
 	docker-compose -f ./testenv/docker-compose.yaml up -d
 rmi:
 	docker rmi tangsengdaodaoserver echomusic/tangsengdaodaoserver  -f	 
+up:
+	docker-compose -f testenv/docker-compose.yaml down
+	@sleep 1
+	docker-compose -f testenv/docker-compose.yaml up	
+down:
+	docker-compose -f testenv/docker-compose.yaml down
 
