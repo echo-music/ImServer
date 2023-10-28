@@ -13,9 +13,9 @@ stop-dev:
 	docker-compose stop
 env-test:
 	docker-compose -f ./testenv/docker-compose.yaml up -d
-rmi:
+rmi:down
 	docker rmi tangsengdaodaoserver echomusic/tangsengdaodaoserver  -f	 
-up:
+up:rmi
 	docker-compose -f testenv/docker-compose.yaml down
 	@sleep 1
 	docker-compose -f testenv/docker-compose.yaml up	
