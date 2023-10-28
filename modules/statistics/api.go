@@ -3,11 +3,11 @@ package statistics
 import (
 	"errors"
 
-	"github.com/TangSengDaoDao/TangSengDaoDaoServer/modules/group"
-	"github.com/TangSengDaoDao/TangSengDaoDaoServer/modules/user"
 	"github.com/TangSengDaoDao/TangSengDaoDaoServerLib/config"
 	"github.com/TangSengDaoDao/TangSengDaoDaoServerLib/pkg/log"
 	"github.com/TangSengDaoDao/TangSengDaoDaoServerLib/pkg/wkhttp"
+	"github.com/echo-music/ImServer/modules/group"
+	"github.com/echo-music/ImServer/modules/user"
 	"go.uber.org/zap"
 )
 

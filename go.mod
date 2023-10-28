@@ -1,4 +1,4 @@
-module github.com/TangSengDaoDao/TangSengDaoDaoServer
+module github.com/echo-music/ImServer
 
 go 1.20
 

@@ -3,7 +3,7 @@ package user
 import (
 	"errors"
 
-	"github.com/TangSengDaoDao/TangSengDaoDaoServer/modules/source"
+	"github.com/echo-music/ImServer/modules/source"
 	"go.uber.org/zap"
 )
 

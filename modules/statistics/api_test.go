@@ -6,9 +6,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/TangSengDaoDao/TangSengDaoDaoServer/modules/group"
-	"github.com/TangSengDaoDao/TangSengDaoDaoServer/modules/user"
 	"github.com/TangSengDaoDao/TangSengDaoDaoServerLib/testutil"
+	"github.com/echo-music/ImServer/modules/group"
+	"github.com/echo-music/ImServer/modules/user"
 	"github.com/stretchr/testify/assert"
 )
 

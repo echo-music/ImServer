@@ -6,11 +6,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/TangSengDaoDao/TangSengDaoDaoServer/modules/base/app"
-	"github.com/TangSengDaoDao/TangSengDaoDaoServer/modules/user"
-	"github.com/TangSengDaoDao/TangSengDaoDaoServer/pkg/util"
 	"github.com/TangSengDaoDao/TangSengDaoDaoServerLib/config"
 	"github.com/TangSengDaoDao/TangSengDaoDaoServerLib/pkg/wkhttp"
+	"github.com/echo-music/ImServer/modules/base/app"
+	"github.com/echo-music/ImServer/modules/user"
+	"github.com/echo-music/ImServer/pkg/util"
 	"github.com/gin-gonic/gin"
 )
 

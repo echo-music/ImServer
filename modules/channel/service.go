@@ -1,8 +1,8 @@
 package channel
 
 import (
-	chservice "github.com/TangSengDaoDao/TangSengDaoDaoServer/modules/channel/service"
 	"github.com/TangSengDaoDao/TangSengDaoDaoServerLib/config"
+	chservice "github.com/echo-music/ImServer/modules/channel/service"
 )
 
 type service struct {

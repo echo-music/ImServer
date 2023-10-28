@@ -5,8 +5,8 @@ package webhook
 // 	"testing"
 
 // 	"github.com/stretchr/testify/assert"
-// 	"github.com/TangSengDaoDao/TangSengDaoDaoServer/internal/api/group"
-// 	"github.com/TangSengDaoDao/TangSengDaoDaoServer/modules/user"
+// 	"github.com/echo-music/ImServer/internal/api/group"
+// 	"github.com/echo-music/ImServer/modules/user"
 // 	"github.com/TangSengDaoDao/TangSengDaoDaoServerLib/pkg/db"
 // )
 

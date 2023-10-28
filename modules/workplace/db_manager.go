@@ -1,9 +1,9 @@
 package workplace
 
 import (
-	"github.com/TangSengDaoDao/TangSengDaoDaoServer/pkg/util"
 	"github.com/TangSengDaoDao/TangSengDaoDaoServerLib/config"
 	dba "github.com/TangSengDaoDao/TangSengDaoDaoServerLib/pkg/db"
+	"github.com/echo-music/ImServer/pkg/util"
 	"github.com/gocraft/dbr/v2"
 )
 

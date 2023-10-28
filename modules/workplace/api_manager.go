@@ -4,11 +4,11 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/TangSengDaoDao/TangSengDaoDaoServer/pkg/log"
-	"github.com/TangSengDaoDao/TangSengDaoDaoServer/pkg/util"
 	"github.com/TangSengDaoDao/TangSengDaoDaoServerLib/common"
 	"github.com/TangSengDaoDao/TangSengDaoDaoServerLib/config"
 	"github.com/TangSengDaoDao/TangSengDaoDaoServerLib/pkg/wkhttp"
+	"github.com/echo-music/ImServer/pkg/log"
+	"github.com/echo-music/ImServer/pkg/util"
 	"go.uber.org/zap"
 )
 

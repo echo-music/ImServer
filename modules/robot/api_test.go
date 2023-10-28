@@ -9,10 +9,10 @@ import (
 	"regexp"
 	"testing"
 
-	"github.com/TangSengDaoDao/TangSengDaoDaoServer/modules/base/event"
 	"github.com/TangSengDaoDao/TangSengDaoDaoServerLib/config"
 	"github.com/TangSengDaoDao/TangSengDaoDaoServerLib/pkg/util"
 	"github.com/TangSengDaoDao/TangSengDaoDaoServerLib/server"
+	"github.com/echo-music/ImServer/modules/base/event"
 	"github.com/stretchr/testify/assert"
 )
 

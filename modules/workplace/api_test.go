@@ -8,8 +8,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/TangSengDaoDao/TangSengDaoDaoServer/pkg/util"
 	"github.com/TangSengDaoDao/TangSengDaoDaoServerLib/testutil"
+	"github.com/echo-music/ImServer/pkg/util"
 	"github.com/stretchr/testify/assert"
 )
 
