@@ -3,7 +3,7 @@ build:
 push:
 	docker tag tangsengdaodaoserver registry.cn-shanghai.aliyuncs.com/wukongim/tangsengdaodaoserver:latest
 	docker push registry.cn-shanghai.aliyuncs.com/wukongim/wukongchatserver:latest
-deploy:
+deploy:rmi
 	docker build -t  tangsengdaodaoserver .
 	docker tag tangsengdaodaoserver echomusic/tangsengdaodaoserver:latest
 	docker push echomusic/tangsengdaodaoserver:latest
