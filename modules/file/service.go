@@ -16,6 +16,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"strings"
 	"sync"
 	"time"
 
@@ -454,7 +455,8 @@ func (s *Service) downloadImage(imgUrl string, ctx context.Context) (io.ReadClos
 	s.Debug("开始下载图片！", zap.String("url", imgUrl))
 	// 需要转换内部地址
 	downloadUrl, _ := url.Parse(imgUrl)
-	imgUrl = "http://" + downloadUrl.Host + ":8091" + downloadUrl.RequestURI()
+	ip := strings.Split(downloadUrl.Host, ":")
+	imgUrl = "http://" + ip[0] + ":8090" + downloadUrl.RequestURI()
 	s.Debug("转换的成为内网下载地址！", zap.String("url", imgUrl))
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, imgUrl, nil)
 	if err != nil {
