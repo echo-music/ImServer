@@ -53,7 +53,8 @@ func (sm *ServiceMinio) UploadFile(filePath string, contentType string, copyFile
 	secretAccessKey := minioConfig.SecretAccessKey
 	useSSL := false
 
-	// endpoint = fmt.Sprintf("%s:%d", endpoint, 9000)
+	ip := strings.Split(endpoint, ":")
+	endpoint = fmt.Sprintf("%s:%d", ip[0], 9000)
 	// if strings.HasPrefix(uploadUl.Scheme, "https") {
 	// 	useSSL = true
 	// }
