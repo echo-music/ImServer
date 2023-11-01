@@ -3,6 +3,7 @@ package file
 import (
 	"bytes"
 	"context"
+	"crypto/tls"
 	"errors"
 	"image"
 	"image/color"
@@ -14,9 +15,7 @@ import (
 	"io/ioutil"
 	"mime/multipart"
 	"net/http"
-	"net/url"
 	"os"
-	"strings"
 	"sync"
 	"time"
 
@@ -454,15 +453,20 @@ func uploadFile(uploadURL, fileName string, copyFileWriter func(io.Writer) error
 func (s *Service) downloadImage(imgUrl string, ctx context.Context) (io.ReadCloser, error) {
 	s.Debug("开始下载图片！", zap.String("url", imgUrl))
 	// 需要转换内部地址
-	downloadUrl, _ := url.Parse(imgUrl)
-	ip := strings.Split(downloadUrl.Host, ":")
-	imgUrl = "http://" + ip[0] + ":8090" + downloadUrl.RequestURI()
-	s.Debug("转换的成为内网下载地址！", zap.String("url", imgUrl))
+	// downloadUrl, _ := url.Parse(imgUrl)
+	// ip := strings.Split(downloadUrl.Host, ":")
+	// imgUrl = "http://" + ip[0] + ":8091" + downloadUrl.RequestURI()
+	// s.Debug("转换的成为内网下载地址！", zap.String("url", imgUrl))
 	req, err := http.NewRequestWithContext(ctx, http.MethodGet, imgUrl, nil)
 	if err != nil {
 		return nil, err
 	}
-	client := &http.Client{}
+	tr := &http.Transport{
+		TLSClientConfig: &tls.Config{
+			InsecureSkipVerify: true, // 禁用 SSL 检查
+		},
+	}
+	client := &http.Client{Transport: tr}
 	// resp, err := s.downloadClient.Get(url)
 	resp, err := client.Do(req)
 	// resp, err := s.downloadClient.Do(req)
